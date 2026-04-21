@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { NEW_STATE_DIRNAME } from "./config/paths.js";
 import {
   resolveEffectiveHomeDir,
   resolveHomeRelativePath,
@@ -145,7 +146,7 @@ export function resolveConfigDir(
   if (configPath) {
     return path.dirname(resolveUserPath(configPath, env, homedir));
   }
-  const newDir = path.join(resolveRequiredHomeDir(env, homedir), ".openclaw");
+  const newDir = path.join(resolveRequiredHomeDir(env, homedir), NEW_STATE_DIRNAME);
   try {
     const hasNew = fs.existsSync(newDir);
     if (hasNew) {

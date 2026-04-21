@@ -21,8 +21,8 @@ export const isNixMode = resolveIsNixMode();
 const LEGACY_STATE_DIRNAMES = [".clawdbot"] as const;
 const LEGACY_CONFIG_FILENAMES = ["clawdbot.json"] as const;
 // 新配置
-const NEW_STATE_DIRNAME = ".ailit";
-const CONFIG_FILENAME = "ailit.json";
+export const NEW_STATE_DIRNAME = ".ailit";
+export const CONFIG_FILENAME = "ailit.json";
 
 function resolveDefaultHomeDir(): string {
   return resolveRequiredHomeDir(process.env, os.homedir);
