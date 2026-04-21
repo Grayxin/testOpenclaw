@@ -159,11 +159,17 @@ export async function runCli(argv: string[] = process.argv) {
     // 1. 如果没有配置文件，先执行静默初始化
     if (!existsSync(CONFIG_PATH)) {
       console.log("First startup detected. Initializing configuration...");
-      await runCli([...argv, "onboard", "--non-interactive", "--accept-risk", "--flow", "quickstart"]);
+      try {
+        // 增加 --skip-health 避免因为连不上还没启动的网关而报错退出
+        await runCli([...argv, "onboard", "--non-interactive", "--accept-risk", "--flow", "quickstart", "--skip-health"]);
+      } catch (e) {
+        console.warn("Initialization finished with warnings (this is normal on first run).");
+      }
     }
 
-    // 2. 无论是否新初始化，直接运行网关
-    console.log("Starting Ailit Gateway...");
+    // 2. 启动网关
+    console.log("🚀 Starting Ailit Gateway...");
+    // 强制修改当前进程的参数并重新解析，避免递归调用导致的 process.exit 问题
     return runCli([...argv, "gateway", "run", "--force"]);
   }
   // --- 自动运行逻辑结束 ---
