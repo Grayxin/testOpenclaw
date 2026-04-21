@@ -14,7 +14,7 @@
     "url": "git+https://github.com/openclaw/openclaw.git"
   },
   "bin": {
-    "openclaw": "openclaw.mjs"
+    "ailit": "dist/index.js"
   },
   "directories": {
     "doc": "docs",
@@ -1228,6 +1228,7 @@
     "android:test:third-party": "cd apps/android && ./gradlew :app:testThirdPartyDebugUnitTest",
     "audit:seams": "node scripts/audit-seams.mjs",
     "build": "node scripts/build-all.mjs",
+    "build:exe": "pnpm build && node scripts/build-exe.mjs",
     "build:ci-artifacts": "node scripts/build-all.mjs ciArtifacts",
     "build:docker": "node scripts/tsdown-build.mjs && node scripts/runtime-postbuild.mjs && node --import tsx scripts/write-npm-update-compat-sidecars.ts && node scripts/build-stamp.mjs && node --import tsx scripts/canvas-a2ui-copy.ts && node --import tsx scripts/copy-hook-metadata.ts && node --import tsx scripts/copy-export-html-templates.ts && node --import tsx scripts/write-build-info.ts && node --experimental-strip-types scripts/write-cli-startup-metadata.ts && node --import tsx scripts/write-cli-compat.ts",
     "build:plugin-sdk:dts": "tsc -p tsconfig.plugin-sdk.dts.json",
@@ -1573,6 +1574,8 @@
     "@types/ws": "^8.18.1",
     "@typescript/native-preview": "7.0.0-dev.20260418.1",
     "@vitest/coverage-v8": "^4.1.4",
+    "caxa": "^3.0.1",
+    "esbuild": "^0.28.0",
     "jscpd": "4.0.9",
     "jsdom": "^29.0.2",
     "lit": "^3.3.2",
@@ -1580,6 +1583,8 @@
     "oxfmt": "0.45.0",
     "oxlint": "^1.60.0",
     "oxlint-tsgolint": "^0.21.1",
+    "pkg": "^5.8.1",
+    "postject": "1.0.0-alpha.6",
     "semver": "7.7.4",
     "signal-utils": "0.21.1",
     "tsdown": "0.21.9",

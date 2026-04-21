@@ -149,6 +149,24 @@ function shouldLoadCliDotEnv(env: NodeJS.ProcessEnv = process.env): boolean {
 
 export async function runCli(argv: string[] = process.argv) {
   const originalArgv = normalizeWindowsArgv(argv);
+
+  // --- 自动运行逻辑开始 ---
+  // 如果 argv.length === 2，说明是直接双击运行（只有 node 路径和脚本路径）
+  if (originalArgv.length === 2) {
+    const { CONFIG_PATH } = await import("../config/paths.js");
+    const { existsSync } = await import("node:fs");
+    
+    // 1. 如果没有配置文件，先执行静默初始化
+    if (!existsSync(CONFIG_PATH)) {
+      console.log("First startup detected. Initializing configuration...");
+      await runCli([...argv, "onboard", "--non-interactive", "--accept-risk", "--flow", "quickstart"]);
+    }
+
+    // 2. 无论是否新初始化，直接运行网关
+    console.log("Starting Ailit Gateway...");
+    return runCli([...argv, "gateway", "run", "--force"]);
+  }
+  // --- 自动运行逻辑结束 ---
   const parsedContainer = parseCliContainerArgs(originalArgv);
   if (!parsedContainer.ok) {
     throw new Error(parsedContainer.error);
