@@ -22,6 +22,7 @@ ui/playwright-report/
 ui/test-results/
 packages/dashboard-next/.next/
 packages/dashboard-next/out/
+ailit.exe
 
 # Mise configuration files
 mise.toml
